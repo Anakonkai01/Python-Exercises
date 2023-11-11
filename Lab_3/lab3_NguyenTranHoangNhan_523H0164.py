@@ -5,167 +5,145 @@ import matplotlib.pyplot as plt
 
 # Exercise 1:
 def exercise1():
-    x = float(input("Input for value of x"))
-    # a
     def a(x):
-        cal = math.pow(x,(1/2))
-        print(f"sqrt of x = {cal}")
-    # b
+        return math.sqrt(x)
+
     def b(x):
-        cal = math.pow(x,(1/3))
-        print(f"cube root of x = {cal}")
-    # c 
+        return x**(1/3)
+
     def c(x):
-        cal = math.pow(x,(2/3))
-        print(f"x power 2/3 = {cal}")
-    # d
+        return x**(2/3)
+
     def d(x):
-        cal = (x**3/3) - (x**2/2) - 2*x + 1/3
-        print(f"Result of (x**3/3) - (x**2/2) - 2*x + 1/3 = {cal}")
-    # e
+        return (x**3/3) - (x**2/2) - 2*x + 1/3
+
     def e(x):
-        cal = (2*x**2 - 3)/(7*x+4)
-        print(f"Result of  = (2*x**2 - 3)/(7*x+4) = {cal}")
-    # f
+        return (2*x**2 - 3)/(7*x+4)
+
     def f(x):
-        cal = (5*x**2 + 8*x - 3 )/(3*x**2 + 2)
-        print(f"Result of (5*x**2 + 8*x - 3 )/(3*x**2 + 2) = {cal}")
-    # g
+        return (5*x**2 + 8*x - 3)/(3*x**2 + 2)
+
     def g(x):
         x = math.radians(x)
-        cal = math.sin(x)
-        print(f"sin({x}) = {cal}") 
-    # h
+        return math.sin(x)
+
     def h(x):
         x = math.radians(x)
-        cal = math.cos(x)
-        print(f"cos({x}) = {cal}")
-    # i 
+        return math.cos(x)
+
     def i(x):
-        cal = math.pow(3,x)
-        print(f"3**x = {cal}")
-    # j
+        return 3**x
+
     def j(x):
-        cal = math.pow(10,-x)
-        print(f"10**-x = {cal}")
-    # k
+        return 10**(-x)
+
     def k(x):
-        cal = math.pow(math.e,x)
-        print(f"e**x = {cal}")
-    # l
+        return math.e**x
+
     def l(x):
-        cal = math.log2(x)
-        print(f"Log(x,base = 2) = {cal}")
-    # m 
+        return math.log2(x)
+
     def m(x):
-        cal = math.log10(x)
-        print(f"log(x,base = 10) = {cal}")
-    # n
+        return math.log10(x)
+
     def n(x):
-        cal = math.log(x)
-        print(f"ln(x)= {cal}")
-    # # default
-    # def default_case():
-    #     print('Invalid Input')
+        return math.log(x)
 
-    # def switch_case(value):
-    #     cases = {
-    #         'a': a(x),
-    #         'b': b(x),
-    #         'c': c(x),
-    #         'd': d(x),
-    #         'e': e(x),
-    #         'f': f(x),
-    #         'g': g(x),
-    #         'h': h(x),
-    #         'i': i(x),
-    #         'j': j(x),
-    #         'k': k(x),
-    #         'l': l(x),
-    #         'm': m(x),
-    #         'n': n(x),
-    #     }
-    #     case = cases.get(value, default_case)
-    #     case()
-    #     return cases
+    functions_dict = {
+        'a': a,
+        'b': b,
+        'c': c,
+        'd': d,
+        'e': e,
+        'f': f,
+        'g': g,
+        'h': h,
+        'i': i,
+        'j': j,
+        'k': k,
+        'l': l,
+        'm': m,
+        'n': n,
+    }
 
-    # value = input(f"Input")
-    # switch_case(value)
+    def selected_function():
+        while True:
+            user_input = input("Enter the function code (a, b, c, d, e, f, g, h, i, j, k, l, m, n, or 'NO' to exit): ").lower()
 
-# End of Exercise 1:
+            if user_input == 'no':
+                break
+
+            if user_input in functions_dict:
+                selected_function = functions_dict[user_input]
+
+                x = float(input("Enter the value of x: "))
+
+                result = selected_function(x)
+                print(f"Result of {user_input}({x}) = {result}")
+            else:
+                print("Invalid input. Please enter a valid function code or 'NO' to exit.")
+
+    selected_function()
+
 
 
 # Exercise 2:
 def exercise2():
-    # 2e
     def fx_2e(x):
-        if x >= 0:
-            return x
-        else:
-            return -x
-    # 2a
+        return x if x >= 0 else -x
+
     def fx_2a(x):
-        cal = 2 + (x**2)/(x**2+4)
-        return cal
-    # 2b
+        return 2 + (x**2)/(x**2+4)
+
     def fx_2b(x):
-        cal = math.sqrt(5*x +10)
-        return cal
-    # 2c
+        return math.sqrt(5*x + 10)
+
     def fx_2c(x):
-        cal = 2/(x**2-16)
-        return cal
-    # 2d
+        return 2/(x**2-16)
+
     def fx_2d(x):
-        cal = x**4 + 3*x**2 - 1 
-        return cal
+        return x**4 + 3*x**2 - 1
 
+    functions_dict = {
+        '2e': fx_2e,
+        '2a': fx_2a,
+        '2b': fx_2b,
+        '2c': fx_2c,
+        '2d': fx_2d,
+    }
 
-    # Find The Max and Min Value
-    def exer2e():
+    def find_max_min(func, range_start, range_end, step):
         arr = np.array([])
-        for x in np.arange( -3.0, 3.1, 0.0001 ):
-            arr = np.append(arr,round(fx_2e(x),5))
+        for x in np.arange(range_start, range_end + step, step):
+            arr = np.append(arr, round(func(x), 5))
         
-        print(arr.max())
-        print(arr.min())
+        print("Max:", arr.max())
+        print("Min:", arr.min())
 
+    while True:
+        user_input = input("Enter the function code (2e, 2a, 2b, 2c, 2d, NO to exit): ").lower()
 
-    def exer2a():
-        arr = np.array([])
-        for x in np.arange( -2.0, 2.1, 0.0001 ):
-            arr = np.append(arr,round(fx_2a(x),5))
-        
-        print(arr.max())
-        print(arr.min())
+        if user_input == "no":
+            break  
 
+        if user_input in functions_dict:
+            selected_function = functions_dict[user_input]
 
-    def exer2b():
-        arr = np.array([])
-        for x in np.arange( -0.0, 5.1, 0.0001 ):
-            arr = np.append(arr,round(fx_2b(x),5))
-        
-        print(arr.max())
-        print(arr.min())
+            if user_input == "2e":
+                range_start, range_end, step = -3.0, 3.0, 0.0001
+            elif user_input == "2a":
+                range_start, range_end, step = -2.0, 2.0, 0.0001
+            elif user_input == "2b":
+                range_start, range_end, step = 0.0, 5.0, 0.0001
+            elif user_input == "2c":
+                range_start, range_end, step = -5.0, 10.0, 0.0001
+            elif user_input == "2d":
+                range_start, range_end, step = -3.0, 3.0, 0.0001
 
+            find_max_min(selected_function, range_start, range_end, step)
+        else:
+            print("Invalid input. Please enter a valid function code or 'NO' to exit.")
 
-    def exer2c():
-        arr = np.array([])
-        for x in np.arange( -5.0, 10.1, 0.0001 ):
-            arr = np.append(arr,round(fx_2c(x),5))
-        
-        print(arr.max())
-        print(arr.min())
-
-
-    def exer2d():
-        arr = np.array([])
-        for x in np.arange( -3.0, 3.1, 0.0001 ):
-            arr = np.append(arr,round(fx_2d(x),5))
-        
-        print(arr.max())
-        print(arr.min())
-# End of excercise 2
 
 
 # Exercise 3:
@@ -178,38 +156,85 @@ def exercise3():
     fCompositeC = f1(f2(-5))
     fCompositeD = f2(f2(2))
 
+    functions_dict = {
+        'a': fCompositeA,
+        'b': fCompositeB,
+        'c': fCompositeC,
+        'd': fCompositeD
+    }
+
+    def selected_function():
+        while True:
+            user_input = input("Enter the function you want to execute (a,   b,   c,   d) or ('no') to exit: ").lower()
+            if user_input == 'no':
+                break
+            if user_input in functions_dict:
+                selected_function = functions_dict[user_input]
+                print("The result = ",selected_function)
+
+    selected_function()        
+
 
 # exercise 4:
 def exercise4():
-    fx_4i = lambda x:x**(-3)
-    fx_4k = lambda x: -(1/(x))
-    x2 = np.arange(-50.0, 50.1, 0.5)
-    x1 = np.arange(-20.0, 20.1, 0.5)
-    y1 = list(map(fx_4i, x1))
-    y2 = list(map(fx_4k,x2))
-    choose = int(input("Input '1' for fx_4i '2' for fx_4k "))
-    plt.grid()
-    if choose == 1:
-        plt.plot(x1,y1)
-    else :
-        plt.plot(x2,y2)   
-    plt.show()
+    fx_4i = lambda x: x**(-3) if x != 0 else np.inf
+    fx_4k = lambda x: -(1/x) if x != 0 else np.inf
+    fx_4m = lambda x: math.sqrt(abs(x))
+    fx_4j = lambda x: 1/math.pow(x, 2) if x != 0 else np.inf
+    fx_4l = lambda x: 1/abs(x) if x != 0 else np.inf
+    fx_4n = lambda x: math.sqrt(abs(-x))
+
+
+    functions_dict = {
+        '4i': fx_4i,
+        '4k': fx_4k,
+        '4m': fx_4m,
+        '4j': fx_4j,
+        '4l': fx_4l,
+        '4n': fx_4n,
+    }
+
+    def plot_selected_function():
+
+        while True:
+            user_input = input("Enter the function you want to execute (4i,  4k,  4m,  4j,  4l,  4n) or ('no') to exit: ").lower()
+
+            if user_input == 'no':
+                break
+
+            if user_input in functions_dict:
+            
+                selected_function = functions_dict[user_input]
+
+                x_values = np.arange(-50.0, 50.1, 0.5)
+
+
+                y_values = list(map(selected_function, x_values))
+
+                plt.grid()
+                plt.plot(x_values, y_values)
+                plt.title(f"Plot of {user_input}")
+                plt.show()
+            else:
+                print("Invalid input. Please enter a valid function.")
+
+    plot_selected_function()
+
+
+
+
 
 
 # exercise 5
 def exercise5():
     def fx1(x):
-        if abs(x) <= 1:
-            return math.sqrt(1 - (abs(x) - 1) ** 2)
-        else:
-            return 0.0  # Return 0 for x values outside the valid range
+        return math.sqrt(1 - math.pow((abs(x) - 1),2))
+
         
     def fx2(x):
-        if abs(x) <= 4:
-            return -3 * math.sqrt(1 - math.sqrt(abs(x) / 2))
-        else:
-            return 0.0  # Return 0 for x values outside the valid range
-    x = np.arange(-2.0, 2.0, 0.01)
+        return -3 * math.sqrt(1 - math.sqrt(abs(x) / 2))
+
+    x = np.arange(-2.0, 2.0, 0.0001)
     y1 = [fx1(xi) for xi in x]
     y2 = [fx2(xi) for xi in x]
     plt.plot(x, y1, color='magenta', label='fx1: Semi-circle')
@@ -221,6 +246,8 @@ def exercise5():
     plt.grid(True)
     plt.show()
 
+
+# exercise 6:
 def exercise6():
     def _6a_():
         x = np.linspace(-10, 10, 400)
@@ -250,3 +277,27 @@ def exercise6():
         ax.grid(True)
         ax.legend()
         plt.show()
+
+
+
+def choose():
+    while True:
+        user_input = input("Enter the number of the exercise you want to execute (1, 2, 3, 4, 5, 6, NO to exit): ").lower()
+        if user_input == "no":
+            break
+        if user_input == "1":
+            exercise1()
+        elif user_input == "2":
+            exercise2()
+        elif user_input == "3":
+            exercise3()
+        elif user_input == "4":
+            exercise4()
+        elif user_input == "5":
+            exercise5()
+        elif user_input == "6":
+            exercise6()
+        else:
+            print("Invalid input. Please enter a valid exercise number or 'NO' to exit.")
+        
+choose()
