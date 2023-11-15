@@ -249,40 +249,213 @@ def exercise5():
 
 # exercise 6:
 def exercise6():
+    def _6b_():
+        x = np.linspace(-10, 10, 400)
+        k_values = [2, 4, 6, 8, 10, 12]
+        for k in k_values:
+            y = (x + k)**2
+            plt.plot(x, y, label=f'f(x) = (x + {k})^2')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graphs of f(x) = (x + k)^2 for different k values')
+        plt.grid(True)
+        plt.legend()
+        plt.show()
+
     def _6a_():
         x = np.linspace(-10, 10, 400)
         k_values = [2, 4, 6, 8, 10, 12]
-        fig, ax = plt.subplots()
         for k in k_values:
-            y = (x + k)**2
-            ax.plot(x, y, label=f'f(x) = (x + {k})^2')
-        ax.set_xlabel('x')
-        ax.set_ylabel('f(x)')
-        ax.set_title('Graphs of f(x) = (x + k)^2 for different k values')
-        ax.grid(True)
-        ax.legend()
-        plt.show()
-
-    def _6b_():
-        x = np.linspace(-10, 10, 400)
-        k = [2, 4, 6, 8, 10, 12]
-
-        fig, ax = plt.subplots()
-        for k in k:
             y = x**2 + k
-            ax.plot(x, y, label=f'f(x) = x^2 + {k}')
-        ax.set_xlabel('x')
-        ax.set_ylabel('f(x)')
-        ax.set_title('Graphs of f(x) = x^2 + k for different k values')
-        ax.grid(True)
-        ax.legend()
+            plt.plot(x, y, label=f'f(x) = x^2 + {k}')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graphs of f(x) = x^2 + k for different k values')
+        plt.grid(True)
+        plt.legend()
         plt.show()
+
+    def _6c_():
+        x = np.linspace(-1, 10, 400)
+        k_values = [1/3, 1, 3, 6]
+        for k in k_values:
+            y = k * np.sqrt(x)
+            plt.plot(x, y, label=f'f(x) = {k}*sqrt(x)')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graphs of f(x) = {k}*sqrt(x) for different k values')
+        plt.grid(True)
+        plt.legend()
+        plt.show()
+
+    def _6d_():
+        x = np.linspace(-2, 0, 100)
+        f = lambda x: (x + 1)**3 - 1
+        y = f(x)
+        plt.plot(x, y, label='f(x) = (x + 1)^3 - 1')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graph of f(x) = (x + 1)^3 - 1')
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.legend()
+        plt.show()
+
+    def _6e_():
+        def f(x):
+            return (x - 1)**(2/3) - 1
+        x = np.linspace(1, 3, 100)
+        y = f(x)
+        plt.plot(x, y, label='f(x) = (x - 1)^(2/3) - 1')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graph of f(x) = (x - 1)^(2/3) - 1')
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.legend()
+        plt.show()
+
+    def _6f_():
+        def f(x):
+            return 0.5 * (x + 1) + 5
+        x = np.linspace(-10, 10, 100)
+        y = f(x)
+        plt.plot(x, y, label='f(x) = 0.5 * (x + 1) + 5')
+        plt.xlabel('x-axis')
+        plt.ylabel('y-axis')
+        plt.title('Graph of f(x) = 0.5 * (x + 1) + 5')
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.legend()
+        plt.show()
+
+    def _6g_():
+        def f(x):
+            return 1 / x**2
+        x = np.linspace(-10, -0.1, 1000)
+        y = f(x)
+        plt.plot(x, y, label='f(x) = 1 / x^2')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graph of f(x) = 1 / x^2 with Left Shift and Down Shift')
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.legend()
+        plt.show()
+
+    def _6h_():
+        def f(x):
+            return 1 - x**3
+        x = np.linspace(-2, 2, 100)
+        y = f(x)
+        plt.plot(x, y, label='Original f(x) = 1 - x^3')
+        x_stretched = np.linspace(-4, 4, 100)
+        y_stretched = f(x_stretched / 2)
+        plt.plot(x_stretched, y_stretched, label='Stretched f(x) = 1 - (x/2)^3')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graph of f(x) = 1 - x^3 and its Horizontal Stretch')
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.legend()
+        plt.show()
+
+    def _6i_():
+        def f(x):
+            return np.sqrt(x + 1)
+        x = np.linspace(-1, 9, 100)
+        y = f(x)
+        plt.plot(x, y, label='Original f(x) = sqrt(x + 1)')
+        x_compressed = np.linspace(-2, 18, 100)
+        y_compressed = f(x_compressed*4)
+        plt.plot(x_compressed, y_compressed, label='Compressed f(x) = sqrt(4x + 1)')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graph of f(x) = sqrt(x + 1) and its Horizontal Compression')
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.legend()
+        plt.show()
+
+    def _6j_():
+        def f(x):
+            return np.sqrt(x + 1)
+        x = np.linspace(-1, 9, 100)
+        y = f(x)
+        plt.plot(x, y, label='Original f(x) = sqrt(x + 1)')
+        x_stretched = np.linspace(-1, 9, 100)
+        y_stretched = 3 * f(x_stretched)
+        plt.plot(x_stretched, y_stretched, label='Stretched f(x) = 3 * sqrt(x + 1)')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title('Graph of f(x) = sqrt(x + 1) and its Vertical Stretch')
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.legend()
+        plt.show()
+
+    functions_dict = {
+        '6a': _6a_,
+        '6b': _6b_,
+        '6c': _6c_,
+        '6d': _6d_,
+        '6e': _6e_,
+        '6f': _6f_,
+        '6g': _6g_,
+        '6h': _6h_,
+        '6i': _6i_,
+        '6j': _6j_
+    }
+
+    def plot_selected_function():
+        while True:
+            user_input = input("Enter the function you want to execute (6a, 6b, 6c, 6d, 6e, 6f, 6g, 6h, 6i, 6j) or ('no') to exit: ").lower()
+            if user_input == 'no':
+                break
+            if user_input in functions_dict:
+                selected_function = functions_dict[user_input]()
+            else:
+                print("Invalid input. Please enter a valid function.")
+
+    plot_selected_function()
+
+
+def exercise7():
+    def is_one_to_one(func, domain):
+        output_set = set()
+        for input_val in domain:
+            output_val = func(input_val)
+            if output_val in output_set:
+                return False
+            output_set.add(output_val)
+        return True
+
+    def f1(x):
+        return x**3 - x/2
+
+    domain1 = range(-100, 101)
+    print("Function f(x) = x^3 - x/2 is one-to-one:", is_one_to_one(f1, domain1))
+
+    def f2(x):
+        return x**2 + x/2
+
+    domain2 = range(-100, 101)
+    print("Function f(x) = x^2 + x/2 is one-to-one:", is_one_to_one(f2, domain2))
+
+
 
 
 
 def choose():
     while True:
-        user_input = input("Enter the number of the exercise you want to execute (1, 2, 3, 4, 5, 6, NO to exit): ").lower()
+        user_input = input("Enter the number of the exercise you want to execute (1, 2, 3, 4, 5, 6, 7, NO to exit): ").lower()
         if user_input == "no":
             break
         if user_input == "1":
@@ -297,6 +470,8 @@ def choose():
             exercise5()
         elif user_input == "6":
             exercise6()
+        elif user_input == "7":
+            exercise7()
         else:
             print("Invalid input. Please enter a valid exercise number or 'NO' to exit.")
         
