@@ -22,31 +22,12 @@ def exercise1():
     fe_prime = sp.diff(fe, x)
     ff_prime = sp.diff(ff, x)
 
-    derivative_dict = {
-        'a1': fa_prime,
-        'b1': fb_prime,
-        'c1': fc_prime,
-        'd1': fd_prime,
-        'e1': fe_prime,
-        'f1': ff_prime
-    }
-    original_dict = {
-        'a1': fa,
-        'b1': fb,
-        'c1': fc,
-        'd1': fd,
-        'e1': fe,
-        'f1': ff
-    }
-
-    while True:
-        function_name = input('Enter a function name (a1, b1, c1, d1, e1, f1) or "no" to exit: ').lower()
-        if function_name in derivative_dict.keys():
-            print(f'The derivative of ({original_dict[function_name]}) = ({derivative_dict[function_name]})')
-        elif function_name == 'no':
-            break
-        else:
-            print(f'The function {function_name} does not exist')
+    print(f"The derivative of ({fa}) = ({fa_prime})")
+    print(f"The derivative of ({fb}) = ({fb_prime})")
+    print(f"The derivative of ({fc}) = ({fc_prime})")
+    print(f"The derivative of ({fd}) = ({fd_prime})")
+    print(f"The derivative of ({fe}) = ({fe_prime})")
+    print(f"The derivative of ({ff}) = ({ff_prime})")
 
 def exercise2():
     x = sp.symbols('x')
@@ -233,29 +214,39 @@ def exercise6():
     print(f"The derivative of fc = {dfc}")
     print(f"The derivative of fd = {dfd}")
 
-# def exercise7():
-#     x = sp.symbols('x')
-#     h = sp.symbols('h')
+def exercise7():
+    x = sp.symbols('x')
 
-#     fa = x**3 + 2*x
-#     fb = x + 5/x
-#     fc = x + sp.sin(2*x)
-#     fd = sp.cos(x) + 4*sp.sin(x)
+    fa = x**3 + 2*x
+    fb = x + 5/x
+    fc = x + sp.sin(2*x)
+    fd = sp.cos(x) + 4*sp.sin(x)
+    def execute(f,x0):
+        sp.plot(f,(x,x0-1/2,x0+3))
+        h = sp.symbols('h')
+        q = (f.subs(x, x0 + h) - f.subs(x, x0))
 
-#     dfa = sp.diff(fa,x)
-#     dfb = sp.diff(fb,x)
-#     dfc = sp.diff(fc,x)
-#     dfd = sp.diff(fd,x)
-    
-#     slopefa = dfa.subs(x,0)
-#     slopefb = dfb.subs(x,1)
-#     slopefc = dfc.subs(x,sp.pi/2)
-#     slopefd = dfd.subs(x,sp.pi)
+        lm = sp.limit(q, h, 0)
+        print("The limit of function q as h -> 0 =", lm)
 
-#     fax0 = fa.subs(x,0)
-#     fbx0 = fb.subs(x,1)
-#     fcx0 = fc.subs(x,sp.pi/2)
-#     fdx0 = fd.subs(x,sp.pi)
+        yh3 = q.subs(h, 3)*(x - x0) + f.subs(x, x0)
+        yh2 = q.subs(h, 2)*(x - x0) + f.subs(x, x0)
+        yh1 = q.subs(h, 1)*(x - x0) + f.subs(x, x0)
+
+        p1 = sp.plot(f, (x, x0 - 1/2, x0 + 3), show=False, line_color='blue', label='f')
+        p2 = sp.plot(yh3, show=False, line_color='green', label='yh3')
+        p3 = sp.plot(yh2, show=False, line_color='red', label='yh2')
+        p4 = sp.plot(yh1, show=False, line_color='purple', label='yh1')
+        p1.extend(p2)
+        p1.extend(p3)
+        p1.extend(p4)
+        p1.legend = True
+        p1.show()
+
+    execute(fa,0)
+    execute(fb,1)
+    execute(fc,sp.pi/2)
+    execute(fd,sp.pi)
 
 
 def exercise8():
@@ -291,7 +282,8 @@ def exercise8():
         y_tangentLine = slope*(x-i) + f.subs(x,i)
         print(f"8c: the Tangent line of fx which go through the point A(2/3;-1) is: {y_tangentLine}")
 
-exercise8()
+
+
 def exercise9():
     x = sp.symbols('x')
 
@@ -326,4 +318,43 @@ def exercise9():
     plt.show()
 
 def exercise10():
-    pass
+    x = sp.symbols('x')
+
+    f1 = (x-1)**1/3
+    f2 = sp.Piecewise((-x - 2, x <= -2), (x + 2, x > -2))
+    f3 = sp.Piecewise((x**2,x>= 0),(0, x<0))
+
+    def checkDiff(f,x0):
+        diff_at_x0 = sp.diff(f, x).subs(x, x0)
+        if diff_at_x0 is sp.nan:
+            print("The function f2(x) is not differentiable at x = ",x0)
+        else:
+            print("The function f2(x) is differentiable at x = ",x0)
+
+    checkDiff(f1,0)
+    checkDiff(f2,-2)
+    checkDiff(f3,0)
+
+
+
+
+
+exercise_dict = {
+    '1': exercise1,
+    '2': exercise2,
+    '3': exercise3,
+    '4': exercise4,
+    '5': exercise5,
+    '6': exercise6,
+    '7': exercise7,
+    '8': exercise8,
+    '9': exercise9,
+    '10': exercise10,
+}
+
+while True:
+    choose = input("Choose an exercise [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]or 'no' to exit: ")
+    if choose in exercise_dict:
+        exercise_dict[choose]()
+    if choose == 'no':
+        break
