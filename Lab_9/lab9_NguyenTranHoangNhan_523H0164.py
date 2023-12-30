@@ -236,21 +236,107 @@ def exercise4():
     print("Exercise 4:")
 
     x = sp.symbols('x')
-    fa = x**2 - 2*x - 5
-    fb = 3*x + x**3 + 5
-    fc = sp.sin(x) + 3*x**2 
-    fd = sp.E**(x*2) + 3*x
-    fe = x**3 -3*x
-    ff = x**3 - 3*x
-    fg = sp.sin(x)
-    fh = sp.sin(2*x)
-    fi = sp.cos(x) 
-    fj = sp.tan(x)**2
-    fk = sp.E**x*sp.sin(x)
-    fl = x**4 - 3*x**2
-    fm = x**4 - 3*x**2
-    fn = x**5 - 5*x**3
-    fo = x**6 - 5*x**2
-    fp = x**3 - 9*x
-    fq = x**3 - 9*x
-    fr = x**3 + 9*x
+    fa = x**2 - 2*x - 5 # a= 0, b= 2
+    fb = 3*x + x**3 + 5 # a = -4, b = 4
+    fc = sp.sin(x) + 3*x**2 #a = -2, b = 2
+    fd = sp.E**(x*2) + 3*x # a = -1, b =1
+    fe = x**3 -3*x #a = -3, b = 0
+    ff = x**3 - 3*x #a = 0, b = 3
+    fg = sp.sin(x) # a = 0, b = pi
+    fh = sp.sin(2*x) # a = 0, b = 2
+    fi = sp.cos(x) # a = pi/2, b = 3pi/2
+    fj = sp.tan(x)**2 # a = -pi/4, b = pi/4
+    fk = sp.E**x*sp.sin(x) # a = 0, b = pi
+    fl = x**4 - 3*x**2 # a = -4, b = 0
+    fm = x**4 - 3*x**2 # a = 0, b = 4
+    fn = x**5 - 5*x**3 # a = -4, b = 0
+    fo = x**6 - 5*x**2 # a = -1, b = 1
+    fp = x**3 - 9*x # a = -3,b b = 0
+    fq = x**3 - 9*x # a = 0, b = 3
+    fr = x**3 + 9*x # a = -1, b= 1
+
+
+    
+    
+def exercise4b():
+    def find_extrema_and_plot(f, a, b, title):
+        # Define the variable
+        x = sp.symbols('x')
+
+        # Find the derivative
+        f_prime = sp.diff(f, x)
+
+        # Find critical points by solving f'(x) = 0
+        critical_points = sp.solve(f_prime, x)
+
+        # Find the second derivative
+        f_double_prime = sp.diff(f_prime, x)
+
+        # Check whether each critical point is a minimum or maximum
+        extrema = []
+        for point in critical_points:
+            second_derivative_at_point = f_double_prime.subs(x, point)
+            if second_derivative_at_point > 0:
+                extrema.append((point, "Minimum"))
+            elif second_derivative_at_point < 0:
+                extrema.append((point, "Maximum"))
+
+        print(f"\n{title} - Critical Points and Type of Extrema:")
+        for point, extrema_type in extrema:
+            print(f"x = {point}, {extrema_type}")
+
+        # Evaluate the function at the critical points to find the corresponding function values
+        function_values_at_critical_points = [(point, f.subs(x, point)) for point in critical_points]
+        print("\nFunction Values at Critical Points:")
+        for point, value in function_values_at_critical_points:
+            print(f"f({point}) = {value}")
+
+        # Generate x values for plotting
+        x_values = np.linspace(a, b, 100)
+        
+        # Convert the sympy function to a numpy function for plotting
+        f_np = sp.lambdify(x, f, 'numpy')
+
+        # Plot the function
+        plt.plot(x_values, f_np(x_values), label=f'{title}')
+
+        # Mark the critical points
+        for point, _ in extrema:
+            plt.scatter(float(point), float(f.subs(x, point)), color='red', label=f'Maximum point at {point}')
+
+        # Add labels and title
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        plt.title(f'Graph of {title}')
+        plt.legend()
+
+        # Show the plot
+        plt.grid(True)
+        plt.axhline(0, color='black', linewidth=0.5)
+        plt.axvline(0, color='black', linewidth=0.5)
+        plt.show()
+
+    # Define the functions
+    functions = [
+        (x**2 - 2*x - 5, 0, 2, "fa"),
+        (3*x + x**3 + 5, -4, 4, "fb"),
+        (sp.sin(x) + 3*x**2, -2, 2, "fc"),
+        (sp.E**(x*2) + 3*x, -1, 1, "fd"),
+        (x**3 - 3*x, -3, 0, "fe"),
+        (x**3 - 3*x, 0, 3, "ff"),
+        (sp.sin(x), 0, sp.pi, "fg"),
+        (sp.sin(2*x), 0, 2, "fh"),
+        (sp.cos(x), sp.pi/2, 3*sp.pi/2, "fi"),
+        (sp.tan(x)**2, -sp.pi/4, sp.pi/4, "fj"),
+        (sp.E**x*sp.sin(x), 0, sp.pi, "fk"),
+        (x**4 - 3*x**2, -4, 0, "fl"),
+        (x**4 - 3*x**2, 0, 4, "fm"),
+        (x**5 - 5*x**3, -4, 0, "fn"),
+        (x**6 - 5*x**2, -1, 1, "fo"),
+        (x**3 - 9*x, -3, 0, "fp"),
+        (x**3 - 9*x, 0, 3, "fq"),
+        (x**3 + 9*x, -1, 1, "fr"),
+    ]
+
+    for func, a, b, title in functions:
+        find_extrema_and_plot(func, a, b, title)
