@@ -1,7 +1,7 @@
-import sympy as sp 
-import matplotlib.pyplot as plt 
-import numpy as np 
-
+import numpy as np
+from scipy.optimize import minimize_scalar
+import sympy as sp
+import matplotlib.pyplot as plt
 
 def exercise1():
     print("Exercise 1:")
@@ -236,107 +236,229 @@ def exercise4():
     print("Exercise 4:")
 
     x = sp.symbols('x')
-    fa = x**2 - 2*x - 5 # a= 0, b= 2
-    fb = 3*x + x**3 + 5 # a = -4, b = 4
-    fc = sp.sin(x) + 3*x**2 #a = -2, b = 2
-    fd = sp.E**(x*2) + 3*x # a = -1, b =1
-    fe = x**3 -3*x #a = -3, b = 0
-    ff = x**3 - 3*x #a = 0, b = 3
-    fg = sp.sin(x) # a = 0, b = pi
-    fh = sp.sin(2*x) # a = 0, b = 2
-    fi = sp.cos(x) # a = pi/2, b = 3pi/2
-    fj = sp.tan(x)**2 # a = -pi/4, b = pi/4
-    fk = sp.E**x*sp.sin(x) # a = 0, b = pi
-    fl = x**4 - 3*x**2 # a = -4, b = 0
-    fm = x**4 - 3*x**2 # a = 0, b = 4
-    fn = x**5 - 5*x**3 # a = -4, b = 0
-    fo = x**6 - 5*x**2 # a = -1, b = 1
-    fp = x**3 - 9*x # a = -3,b b = 0
-    fq = x**3 - 9*x # a = 0, b = 3
-    fr = x**3 + 9*x # a = -1, b= 1
-
-
-    
-    
-def exercise4b():
-    def find_extrema_and_plot(f, a, b, title):
-        # Define the variable
-        x = sp.symbols('x')
-
-        # Find the derivative
-        f_prime = sp.diff(f, x)
-
-        # Find critical points by solving f'(x) = 0
-        critical_points = sp.solve(f_prime, x)
-
-        # Find the second derivative
-        f_double_prime = sp.diff(f_prime, x)
-
-        # Check whether each critical point is a minimum or maximum
-        extrema = []
-        for point in critical_points:
-            second_derivative_at_point = f_double_prime.subs(x, point)
-            if second_derivative_at_point > 0:
-                extrema.append((point, "Minimum"))
-            elif second_derivative_at_point < 0:
-                extrema.append((point, "Maximum"))
-
-        print(f"\n{title} - Critical Points and Type of Extrema:")
-        for point, extrema_type in extrema:
-            print(f"x = {point}, {extrema_type}")
-
-        # Evaluate the function at the critical points to find the corresponding function values
-        function_values_at_critical_points = [(point, f.subs(x, point)) for point in critical_points]
-        print("\nFunction Values at Critical Points:")
-        for point, value in function_values_at_critical_points:
-            print(f"f({point}) = {value}")
-
-        # Generate x values for plotting
-        x_values = np.linspace(a, b, 100)
-        
-        # Convert the sympy function to a numpy function for plotting
-        f_np = sp.lambdify(x, f, 'numpy')
-
-        # Plot the function
-        plt.plot(x_values, f_np(x_values), label=f'{title}')
-
-        # Mark the critical points
-        for point, _ in extrema:
-            plt.scatter(float(point), float(f.subs(x, point)), color='red', label=f'Maximum point at {point}')
-
-        # Add labels and title
-        plt.xlabel('x')
-        plt.ylabel('f(x)')
-        plt.title(f'Graph of {title}')
-        plt.legend()
-
-        # Show the plot
-        plt.grid(True)
-        plt.axhline(0, color='black', linewidth=0.5)
-        plt.axvline(0, color='black', linewidth=0.5)
-        plt.show()
-
-    # Define the functions
-    functions = [
-        (x**2 - 2*x - 5, 0, 2, "fa"),
-        (3*x + x**3 + 5, -4, 4, "fb"),
-        (sp.sin(x) + 3*x**2, -2, 2, "fc"),
-        (sp.E**(x*2) + 3*x, -1, 1, "fd"),
-        (x**3 - 3*x, -3, 0, "fe"),
-        (x**3 - 3*x, 0, 3, "ff"),
-        (sp.sin(x), 0, sp.pi, "fg"),
-        (sp.sin(2*x), 0, 2, "fh"),
-        (sp.cos(x), sp.pi/2, 3*sp.pi/2, "fi"),
-        (sp.tan(x)**2, -sp.pi/4, sp.pi/4, "fj"),
-        (sp.E**x*sp.sin(x), 0, sp.pi, "fk"),
-        (x**4 - 3*x**2, -4, 0, "fl"),
-        (x**4 - 3*x**2, 0, 4, "fm"),
-        (x**5 - 5*x**3, -4, 0, "fn"),
-        (x**6 - 5*x**2, -1, 1, "fo"),
-        (x**3 - 9*x, -3, 0, "fp"),
-        (x**3 - 9*x, 0, 3, "fq"),
-        (x**3 + 9*x, -1, 1, "fr"),
+    functions_intervals = [
+        (x**2 - 2*x - 5, (0, 2)),           # fa
+        (3*x + x**3 + 5, (-4, 4)),          # fb
+        (sp.sin(x) + 3*x**2, (-2, 2)),      # fc
+        (sp.E**(x*2) + 3*x, (-1, 1)),       # fd
+        (x**3 - 3*x, (-3, 0)),              # fe
+        (x**3 - 3*x, (0, 3)),               # ff
+        (sp.sin(x), (0, np.pi)),            # fg
+        (sp.sin(2*x), (0, 2)),              # fh
+        (sp.cos(x), (sp.pi/2, 3*sp.pi/2)),  # fi
+        (sp.tan(x)**2, (-sp.pi/4, sp.pi/4)),# fj
+        (sp.E**x*sp.sin(x), (0, np.pi)),    # fk
+        (x**4 - 3*x**2, (-4, 0)),           # fl
+        (x**4 - 3*x**2, (0, 4)),            # fm
+        (x**5 - 5*x**3, (-4, 0)),           # fn
+        (x**6 - 5*x**2, (-1, 1)),           # fo
+        (x**3 - 9*x, (-3, 0)),              # fp
+        (x**3 - 9*x, (0, 3)),               # fq
+        (x**3 + 9*x, (-1, 1))               # fr
     ]
 
-    for func, a, b, title in functions:
-        find_extrema_and_plot(func, a, b, title)
+    for function, interval in functions_intervals:
+        func = sp.lambdify(x, function, 'numpy')
+
+        try:
+            result_min = minimize_scalar(func, bounds=interval, method='bounded')
+
+            result_max = minimize_scalar(lambda x: -func(x), bounds=interval, method='bounded')  
+
+            optimal_x_min = result_min.x
+            optimal_y_min = result_min.fun
+            optimal_x_max = result_max.x
+            optimal_y_max = -result_max.fun  
+
+            if (
+                np.isscalar(optimal_x_min) and np.isfinite(optimal_x_min) and np.isscalar(optimal_y_min) and np.isfinite(optimal_y_min) and
+                np.isscalar(optimal_x_max) and np.isfinite(optimal_x_max) and np.isscalar(optimal_y_max) and np.isfinite(optimal_y_max)
+            ):
+                print(f"Function: {function}")
+                print("Minimum Point: x =", optimal_x_min, ", y =", optimal_y_min)
+                print("Maximum Point: x =", optimal_x_max, ", y =", optimal_y_max)
+
+                x_values = np.linspace(interval[0], interval[1], 100)
+                y_values = func(x_values)
+
+                plt.plot(x_values, y_values, label=f"Function: {str(function)}")
+                plt.scatter(optimal_x_min, optimal_y_min, color='red', label=f'Minimum Point at x = {optimal_x_min:.2f}', zorder=5)
+                plt.scatter(optimal_x_max, optimal_y_max, color='green', label=f'Maximum Point at x = {optimal_x_max:.2f}', zorder=5)
+                plt.title("Function with Minimum and Maximum Points")
+                plt.xlabel("x")
+                plt.ylabel("y")
+                plt.legend()
+                plt.grid(True)
+                plt.show()
+                print("\n" + "="*40 + "\n")
+            else:
+                print(f"Optimal values are not valid for function: {function}\n")
+
+        except Exception as e:
+            print(f"Error occurred while processing function {function}: {str(e)}\n")
+
+    
+def exercise5():
+    print()
+    print()
+    print("Exercise 5:")
+    print("Golden Search:")
+    def golden_section_search(func, a, b, epsilon=1e-6):
+        golden_ratio = (np.sqrt(5) - 1) / 2
+
+        x1 = b - golden_ratio * (b - a)
+        x2 = a + golden_ratio * (b - a)
+
+        f_x1 = func(x1)
+        f_x2 = func(x2)
+
+        iteration = 1
+
+        results = []
+
+        while abs(b - a) > epsilon:
+            results.append([iteration, a, b, x1, x2, f_x1, f_x2])
+
+            if f_x1 < f_x2:
+                b = x2
+                x2 = x1
+                x1 = b - golden_ratio * (b - a)
+                f_x2 = f_x1
+                f_x1 = func(x1)
+            else:
+                a = x1
+                x1 = x2
+                x2 = a + golden_ratio * (b - a)
+                f_x1 = f_x2
+                f_x2 = func(x2)
+
+            iteration += 1
+
+        results.append([iteration, a, b, x1, x2, f_x1, f_x2])
+
+        return results
+
+    def objective_function(x):
+        return x**2
+
+    a = -2
+    b = 1
+    epsilon = 0.3
+
+    results = golden_section_search(objective_function, a, b, epsilon)
+
+    print("Iteration |   a   |   b   |   x1   |   x2   |  f(x1)  |  f(x2) ")
+    print("="*66)
+    for row in results:
+        print("{:9} | {:5.2f} | {:5.2f} | {:6.2f} | {:6.2f} | {:7.2f} | {:7.2f}".format(*row))
+
+    x_values = np.linspace(a, b, 100)
+    y_values = objective_function(x_values)
+    plt.plot(x_values, y_values, label="f(x) = x^2")
+    plt.scatter([row[3] for row in results], [row[5] for row in results], color='red', label='Iteration Points', zorder=5)
+    plt.title("Golden Section Search for Minimum of f(x) = x^2")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def exercise6():
+    print()
+    print()
+    print("Exercise 6:")
+    print("Fibonacci Search:")
+    def fibonacci_search(func, a, b, epsilon=1e-6):
+        fib_sequence = [1, 1]
+        while fib_sequence[-1] < (b - a) / epsilon:
+            fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
+
+        x1 = a + (b - a) * fib_sequence[-3] / fib_sequence[-1]
+        x2 = a + (b - a) * fib_sequence[-2] / fib_sequence[-1]
+
+        f_x1 = func(x1)
+        f_x2 = func(x2)
+
+        iteration = 1
+
+        results = []
+
+        while abs(b - a) > epsilon:
+            results.append([iteration, a, b, x1, x2, f_x1, f_x2])
+
+            if f_x1 < f_x2:
+                b = x2
+                x2 = x1
+                x1 = a + (b - a) * fib_sequence[-3] / fib_sequence[-1]
+                f_x2 = f_x1
+                f_x1 = func(x1)
+            else:
+                a = x1
+                x1 = x2
+                x2 = a + (b - a) * fib_sequence[-2] / fib_sequence[-1]
+                f_x1 = f_x2
+                f_x2 = func(x2)
+
+            iteration += 1
+
+        results.append([iteration, a, b, x1, x2, f_x1, f_x2])
+
+        return results
+
+    def objective_function(x):
+        return x**2
+
+    a = -2
+    b = 1
+    epsilon = 0.3
+
+    results = fibonacci_search(objective_function, a, b, epsilon)
+
+    print("Iteration |   a   |   b   |   x1   |   x2   |  f(x1)  |  f(x2) ")
+    print("="*66)
+    for row in results:
+        print("{:9} | {:5.2f} | {:5.2f} | {:6.2f} | {:6.2f} | {:7.2f} | {:7.2f}".format(*row))
+
+    x_values = np.linspace(a, b, 100)
+    y_values = objective_function(x_values)
+
+    plt.plot(x_values, y_values, label="f(x) = x^2")
+    plt.scatter([row[3] for row in results], [row[5] for row in results], color='red', label='Iteration Points', zorder=5)
+    plt.title("Fibonacci Search for Minimum of f(x) = x^2")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def exercise7():
+    print()
+    print()
+    print("Exercise 7:")
+    x, m = sp.symbols('x m')
+
+    y = x**3 - 3*m*x**2 + 3*(m**2 - 1)*x - (m**2 - 1)
+
+    dy_dx = sp.diff(y, x)
+
+    critical_points = sp.solve(dy_dx, x)
+
+    m_values = []
+
+    for point in critical_points:
+        m_solution = sp.solve(y.subs(x, 1).subs(x, point), m)
+        m_values.append(m_solution)
+
+    for i, point in enumerate(critical_points):
+        print(f"Solution {i + 1}:")
+        print(f"   Critical Point x: {point}")
+        print(f"   Corresponding m: {m_values[i]}\n")
+
+
+exercise1()
+exercise2()
+exercise3()
+exercise4()
+exercise5()
+exercise6()
+exercise7()
