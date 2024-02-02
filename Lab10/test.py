@@ -1,1 +1,0 @@
-print("hello world fucing wboy ")
