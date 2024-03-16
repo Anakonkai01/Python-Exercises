@@ -50,15 +50,12 @@ def exercise8():
     print("Exercise 8:")
     x, y, z, t = sp.symbols('x y z t')
 
-    # Define the equations
     equation1 = 2*x - 4*y + 4*z + 0.077*t - 3.86
-    equation2 = -2*y + 2*z - 0.056*t + 3.47  # Adjusted the sign to move constant term to the right-hand side
+    equation2 = -2*y + 2*z - 0.056*t + 3.47  
     equation3 = 2*x - 2*y
 
-    # Solve the equations
     solution = sp.solve((equation1, equation2, equation3), (x, y, z, t))
 
-    # Print the solution
     print("Solution:")
     print(solution)
 
@@ -82,7 +79,7 @@ def exercise9():
     # Print the RGB color values
     print("RGB Color:", RGB_color)
 
-exercise9()
+exercise9(  )
 def exercise10():
     print()
     print()
@@ -119,4 +116,3 @@ def exercise11():
         print(f"{key}: {value}")
 
 
-exercise11()
