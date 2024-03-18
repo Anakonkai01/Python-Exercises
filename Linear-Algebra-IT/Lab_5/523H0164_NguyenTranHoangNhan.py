@@ -67,19 +67,14 @@ def exercise9():
                 [0.35, 0.59, 0.063],
                 [0.04, 0.12, 0.787]])
 
-    # Find the inverse of matrix A
     A_inv = np.linalg.inv(A)
 
-    # Define the CIE color vector
-    CIE_color = np.array([X, Y, Z])  # Replace X, Y, Z with the CIE color values
+    CIE_color = np.array([  9.226, 6.120, 2.062])  
 
-    # Convert CIE to RGB
     RGB_color = np.dot(A_inv, CIE_color)
 
-    # Print the RGB color values
     print("RGB Color:", RGB_color)
 
-exercise9(  )
 def exercise10():
     print()
     print()
@@ -116,3 +111,9 @@ def exercise11():
         print(f"{key}: {value}")
 
 
+exercise6()
+exercise7()
+exercise8()
+exercise9()
+exercise10()
+exercise11()
