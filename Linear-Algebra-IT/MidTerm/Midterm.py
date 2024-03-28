@@ -1,27 +1,23 @@
-import sympy as sp
 import numpy as np
-import matplotlib.pyplot as plt
 
-
+# Declaration
+# Matrix A
 rows = 10
 cols = 10
+a_matrix = np.arange(1, rows * cols + 1) # Create a 1D array with sequential numbers
+a_matrix = a_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
 
-# Create a 1D array with sequential numbers
-a_matrix = np.arange(1, rows * cols + 1)
-# Reshape the 1D array into the desired shape
-a_matrix = a_matrix.reshape((rows, cols))
-
+# Matrix B
 rows = 2
 cols = 10
+b_matrix = np.arange(1, rows * cols + 1) # Create a 1D array with sequential numbers
+b_matrix = b_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
 
-b_matrix = np.arange(1, rows * cols + 1)
-b_matrix = b_matrix.reshape((rows, cols))
-
+# Matrix C
 rows = 10
 cols = 2
-
-c_matrix = np.arange(1, rows * cols + 1)
-c_matrix = c_matrix.reshape((rows, cols))
+c_matrix = np.arange(1, rows * cols + 1) # Create a 1D array with sequential numbers
+c_matrix = c_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
 
 
 
@@ -32,7 +28,7 @@ def a():
 
 def b():
     result = 0
-    for i in range(4):
+    for i in range(10):
         result += np.linalg.matrix_power(a_matrix,i+1)/(10+i)
     print(result)
 
@@ -68,7 +64,6 @@ def f():
             d_matrix[i] = np.flip(d_matrix[i])
 
     # Print the resultant matrix
-    print("Resultant Matrix:")
     print(d_matrix)
 
 
@@ -76,12 +71,10 @@ def g():
     def is_prime(n):
         if n <= 1:
             return False
-        for i in range(2, int(n**0.5) + 1):
+        for i in range(2, int(np.sqrt(n)) + 1):
             if n % i == 0:
                 return False
         return True
-
-
 
     # Find the maximum number of prime numbers in any row
     max_prime_count = max(sum(is_prime(num) for num in row) for row in a_matrix)
@@ -116,15 +109,23 @@ def h():
     rows_with_max_length = [row for row, length in zip(a_matrix, max_odd_sequence_lengths) if length == max_length]
 
     # Print the rows with the longest contiguous odd numbers sequence
-    print("Rows with the longest contiguous odd numbers sequence:")
     for row in rows_with_max_length:
         print(row)
 
 
 
-
-# a()
-# b()
-# c()
-# d()
-# e()
+# Call the function
+print("Task 1a:")
+a()
+print("Task 1b:")
+b()
+print("Task 1c:")
+c()
+print("Task 1d:")
+d()
+print("Task 1e:")
+e()
+print("Task 1g:")
+g()
+print("Task 1h:")
+h()
