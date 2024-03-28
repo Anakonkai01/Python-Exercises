@@ -26,12 +26,13 @@ def a():
     result = a_matrix + a_matrix.T + np.matmul(c_matrix,b_matrix) + np.matmul(b_matrix.T,c_matrix.T)
     print(result)
 
+    
+
 def b():
     result = 0
-    for i in range(10):
-        result += np.linalg.matrix_power(a_matrix,i+1)/(10+i)
+    for i in range(3):
+        result += (np.linalg.matrix_power(a_matrix,i+1)/pow(10+i,i+1))
     print(result)
-
 
 def c():
     odd_row = [value for index, value in enumerate(a_matrix) if index%2 == 0]
