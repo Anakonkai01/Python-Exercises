@@ -32,7 +32,7 @@ def a():
 
 def b():
     result = 0
-    for i in range(10):
+    for i in range(4):
         result += np.linalg.matrix_power(a_matrix,i+1)/(10+i)
     print(result)
 
@@ -107,20 +107,18 @@ def h():
         return max_length
 
     # Find the length of the longest contiguous odd numbers sequence in each row
-    max_odd_sequence_lengths = [longest_odd_sequence(row) for row in matrix]
+    max_odd_sequence_lengths = [longest_odd_sequence(row) for row in a_matrix]
 
     # Find the maximum length of the contiguous odd numbers sequence among all rows
     max_length = max(max_odd_sequence_lengths)
 
     # Find the rows with the maximum length of the contiguous odd numbers sequence
-    rows_with_max_length = [row for row, length in zip(matrix, max_odd_sequence_lengths) if length == max_length]
+    rows_with_max_length = [row for row, length in zip(a_matrix, max_odd_sequence_lengths) if length == max_length]
 
     # Print the rows with the longest contiguous odd numbers sequence
     print("Rows with the longest contiguous odd numbers sequence:")
     for row in rows_with_max_length:
         print(row)
-
-
 
 
 
