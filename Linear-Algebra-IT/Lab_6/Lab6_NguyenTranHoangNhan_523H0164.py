@@ -118,5 +118,21 @@ def exercise7():
 def exercise8():
     str1 = "ATTACK"
     str2 = "LINEAR ALGEBRA LABORATORY"
-    A_matrix = np.array([3,4,5,1,3,1,1,1,2])
+    key_matrix = np.array([3,4,5,1,3,1,1,1,2]).reshape(3,3)
     
+    d_matrix = [ord(char) for char in str1]
+    # print(len(d_matrix)/len(key_matrix))
+    
+    while(1):
+        if len(d_matrix)%len(key_matrix) == 0:
+            colD = int(len(d_matrix)/len(key_matrix))
+            d_matrix = np.array(d_matrix)
+            d_matrix = np.reshape(d_matrix,(3,colD))
+            break
+        else:
+            d_matrix.append(30)
+
+    encode_matrix = np.matmul(key_matrix,d_matrix)
+    print(encode_matrix)    
+    
+exercise8()
