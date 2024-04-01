@@ -8,16 +8,14 @@ def exercise1():
     a5_matrix = np.array([5,-4,2,-1,2,3,-2,1,0]).reshape(3,3)
 
     def cal_1_norm(matrix):
-        rowArray = []
-        for row in matrix:
-            sumRow = 0
-            for value in row:
-              sumRow += abs(value)
-            rowArray.append(sum)
-        rowArray.sort()
-        return rowArray[len(rowArray) - 1]
+        col_sums = np.sum(np.abs(matrix), axis=0)
+        return np.max(col_sums)
 
-    print(cal_1_norm(a1_matrix) )
+    print("A1: ",cal_1_norm(a1_matrix))
+    print("A1: ",cal_1_norm(a2_matrix))
+    print("A1: ",cal_1_norm(a3_matrix))
+    print("A1: ",cal_1_norm(a4_matrix))
+    print("A1: ",cal_1_norm(a5_matrix))
 
 def exercise2():
     b1_matrix = np.array([1,-7,-2,-3]).reshape(2,2)
@@ -26,32 +24,21 @@ def exercise2():
     b4_matrix = np.array([3,6,-1,3,1,0,2,4,-7]).reshape(3,3)
     b5_matrix = np.array([-3,0,0,0,4,0,0,0,2]).reshape(3,3)
 
-    def cal_1_norm(matrix):
-        matrix = matrix.T # chuyen vi ma tran de tinh nhu exercise 1
-        rowArray = []
-        for row in matrix:
-            sumRow = 0
-            for value in row:
-              sumRow += abs(value)
-            rowArray.append(sum)
-        rowArray.sort()
-        return rowArray[len(rowArray) - 1]
+    print("B1: ",np.linalg.norm(b1_matrix, ord=np.inf))
+    print("B2: ",np.linalg.norm(b2_matrix, ord=np.inf))
+    print("B3: ",np.linalg.norm(b3_matrix, ord=np.inf))
+    print("B4: ",np.linalg.norm(b4_matrix, ord=np.inf))
+    print("B5: ",np.linalg.norm(b5_matrix, ord=np.inf))
 
 def exercise3():
     c1_matrix = np.array([5,-4,2,-1,2,3,-2,1,0]).reshape(3,3)
     c2_matrix = np.array([1,7,3,4,-2,-2,-2,-1,1]).reshape(3,3)
     c3_matrix = np.array([2,3,1,-1]).reshape(2,2)
 
-    def Frobenius_norm(matrix):
-        matrix = np.reshape(matrix,-11)
-        sum = 0
-        for i in matrix: 
-            sum += i*i
-        return np.sqrt(sum)
     print("Frobenius norm of matrix:")
-    print("C1: ",Frobenius_norm(c1_matrix))
-    print("C2: ",Frobenius_norm(c2_matrix))
-    print("C3: ",Frobenius_norm(c3_matrix))
+    print("C1: ",np.linalg.norm(c1_matrix, 'fro'))
+    print("C2: ",np.linalg.norm(c2_matrix, 'fro'))
+    print("C3: ",np.linalg.norm(c3_matrix, 'fro'))
 
 
 def exercise4():
@@ -121,7 +108,6 @@ def exercise8():
     key_matrix = np.array([3,4,5,1,3,1,1,1,2]).reshape(3,3)
     
     d_matrix = [ord(char) for char in str1]
-    # print(len(d_matrix)/len(key_matrix))
     
     while(1):
         if len(d_matrix)%len(key_matrix) == 0:
@@ -133,6 +119,6 @@ def exercise8():
             d_matrix.append(30)
 
     encode_matrix = np.matmul(key_matrix,d_matrix)
-    print(encode_matrix)    
+    print(encode_matrix)
     
 exercise8()
