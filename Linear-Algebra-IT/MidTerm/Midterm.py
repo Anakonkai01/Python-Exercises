@@ -4,7 +4,7 @@ import numpy as np
 # Matrix A
 rows = 10
 cols = 10
-a_matrix = np.arange(1, rows * cols + 1) # Create a 1D array with sequential numbers
+a_matrix = np.arange(1, rows * cols + 1 ,dtype=np.longdouble) # Create a 1D array with sequential numbers
 a_matrix = a_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
 
 # Matrix B
@@ -20,19 +20,19 @@ c_matrix = np.arange(1, rows * cols + 1) # Create a 1D array with sequential num
 c_matrix = c_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
 
 
-
-
+# in ma tran do ra luon 
+# nho chup hinh output
+# bat buoc ma tran la tao random
 def a():
     result = a_matrix + a_matrix.T + np.matmul(c_matrix,b_matrix) + np.matmul(b_matrix.T,c_matrix.T)
     print(result)
 
-    
-
 def b():
     result = 0
-    for i in range(3):
-        result += (np.linalg.matrix_power(a_matrix,i+1)/pow(10+i,i+1))
+    for i in range(10):
+        result += np.linalg.matrix_power(a_matrix/(10+i),i+1)
     print(result)
+
 
 def c():
     odd_row = [value for index, value in enumerate(a_matrix) if index%2 == 0]
@@ -67,7 +67,6 @@ def f():
     # Print the resultant matrix
     print(d_matrix)
 
-
 def g():
     def is_prime(n):
         if n <= 1:
@@ -86,7 +85,6 @@ def g():
     # Print the rows with the maximum number of prime numbers
     for row in rows_with_max_primes:
         print(row)
-
 
 def h():
     def longest_odd_sequence(lst):
@@ -116,17 +114,19 @@ def h():
 
 
 # Call the function
-print("Task 1a:")
-a()
+# print("Task 1a:")
+# a()
 print("Task 1b:")
 b()
-print("Task 1c:")
-c()
-print("Task 1d:")
-d()
-print("Task 1e:")
-e()
-print("Task 1g:")
-g()
-print("Task 1h:")
-h()
+# print("Task 1c:")
+# c()
+# print("Task 1d:")
+# d()
+# print("Task 1e:")
+# e()
+# print("Task 1f:")
+# f()
+# print("Task 1g:")
+# g()
+# print("Task 1h:")
+# h()
