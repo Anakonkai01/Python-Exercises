@@ -4,25 +4,30 @@ import numpy as np
 # Matrix A
 rows = 10
 cols = 10
-a_matrix = np.arange(1, rows * cols + 1 ,dtype=np.longdouble) # Create a 1D array with sequential numbers
-a_matrix = a_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
+a_matrix = np.arange(1, rows * cols + 1).reshape(rows,cols) # Create a 1D array with sequential numbers
 
 # Matrix B
 rows = 2
 cols = 10
-b_matrix = np.arange(1, rows * cols + 1) # Create a 1D array with sequential numbers
-b_matrix = b_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
+b_matrix = np.arange(1, rows * cols + 1).reshape(rows,cols) # Create a 1D array with sequential numbers
 
 # Matrix C
 rows = 10
 cols = 2
-c_matrix = np.arange(1, rows * cols + 1) # Create a 1D array with sequential numbers
-c_matrix = c_matrix.reshape((rows, cols)) # Reshape the 1D array into the desired shape
+c_matrix = np.arange(1, rows * cols + 1).reshape(rows,cols) # Create a 1D array with sequential numbers
 
 
 # in ma tran do ra luon 
 # nho chup hinh output
 # bat buoc ma tran la tao random
+def printMatrix():
+    print("Matrix A: ")
+    print(a_matrix)
+    print("Matrix B: ")
+    print(b_matrix)
+    print("Matrix C: ")
+    print(c_matrix)
+
 def a():
     result = a_matrix + a_matrix.T + np.matmul(c_matrix,b_matrix) + np.matmul(b_matrix.T,c_matrix.T)
     print(result)
@@ -113,20 +118,21 @@ def h():
 
 
 
+printMatrix()
 # Call the function
-# print("Task 1a:")
-# a()
+print("Task 1a:")
+a()
 print("Task 1b:")
 b()
-# print("Task 1c:")
-# c()
-# print("Task 1d:")
-# d()
-# print("Task 1e:")
-# e()
-# print("Task 1f:")
-# f()
-# print("Task 1g:")
-# g()
-# print("Task 1h:")
-# h()
+print("Task 1c:")
+c()
+print("Task 1d:")
+d()
+print("Task 1e:")
+e()
+print("Task 1f:")
+f()
+print("Task 1g:")
+g()
+print("Task 1h:")
+h()
