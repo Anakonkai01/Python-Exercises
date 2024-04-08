@@ -2,6 +2,7 @@ import sympy as sp
 import numpy as np
 
 def exercise1():
+    print("Exercise 1:")
     av1 = np.array([1,2,3,4])
     av2 = np.array([-1,0,1,3])
     av3 = np.array([0,5,-6,8])
@@ -175,8 +176,15 @@ def exercise6():
     print(f"Vector a3 is in the column space of B: {a3_in_col_space}")
     print(f"Vector a5 is in the column space of B: {a5_in_col_space}")
 
-def exercise7():
-    print()
-    print()
-    print("Exercise 7:")
-    
+
+exercise1()
+exercise2()
+exercise3()
+exercise4()
+exercise5()
+exercise6()
+
+# def exercise7():
+#     print()
+#     print()
+#     print("Exercise 7:")
