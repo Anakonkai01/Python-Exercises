@@ -15,9 +15,7 @@ cols = 2
 c_matrix = np.random.randint(1, rows * cols + 1,(rows,cols))
 
 
-# in ma tran do ra luon 
-# nho chup hinh output
-# bat buoc ma tran la tao random
+
 def printMatrix():
     print("Matrix A: ")
     print(a_matrix)
