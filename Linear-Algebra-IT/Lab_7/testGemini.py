@@ -1,28 +1,61 @@
 import numpy as np
+from scipy.linalg import null_space
 
-# Define the vectors
-v1 = np.array([1, 0, 2])
-v2 = np.array([0, 1, 4])
-v3 = np.array([2, -2, -4])
+def null_space_basis(matrix):
+  """
+  Finds a basis for the null space of a matrix.
 
-# Stack the vectors as columns of a matrix
-vectors = np.vstack([v1, v2, v3])
+  Args:
+      matrix: A 2D numpy array representing the matrix.
 
-# Check the rank of the matrix (dimension of the span)
-rank = np.linalg.matrix_rank(vectors)
-print("Dimension of the span:", rank)
+  Returns:
+      A list of numpy arrays representing the basis vectors of the null space.
+  """
 
-# Interpretation of rank
-if rank < vectors.shape[1]:  # Less than the number of vectors
-  print("The vectors are linearly dependent. The dimension of the span is less than the number of vectors.")
-else:  # Equal to the number of vectors
-  print("The vectors may be linearly independent (a basis).")
+  # Calculate the null space using scipy.linalg.null_space
+  nullspace_vectors = null_space(matrix)
 
-# Find a basis using QR decomposition (optional)
-Q, R = np.linalg.qr(vectors)
-basis = Q[:, :rank]  # Extract basis vectors from the first rank columns of Q
+  # Convert null space vectors to a list (optional)
+  basis = nullspace_vectors.tolist()
+  return basis
 
-# Print the basis vectors, emphasizing non-uniqueness
-print("\nOne possible basis for the span (not unique):")  # Indicate non-uniqueness
-for i, vec in enumerate(basis):
-  print(f"v{i+1}:", vec)
+# Function to generate Hilbert matrix
+def hilbert_matrix(n):
+  H = np.zeros((n, n))
+  for i in range(n):
+    for j in range(n):
+      H[i, j] = 1 / (i + j + 1)
+  return H
+
+# Function to generate Pascal matrix
+def pascal_matrix(n):
+  P = np.zeros((n, n))
+  for i in range(n):
+    for j in range(min(i, n - i - 1)):
+      P[i, j] = np.math.factorial(i) // (np.math.factorial(j) * np.math.factorial(i - j))
+  return P
+
+# Function to generate Magic matrix (example - 3x3 works for n=5 but not guaranteed for all sizes)
+def magic_matrix(n):
+  if n % 2 != 1:
+    raise ValueError("Magic matrix size must be odd.")
+  magic_sum = n * (n + 1) // 2
+  M = np.zeros((n, n))
+  i, j, num = 0, n // 2, 1
+  while num <= n * n:
+    M[i, j] = num
+    i = (i - 1 + n) % n
+    j = (j + 1) % n
+    num += 1
+  return M
+
+# Example usage
+# (Modify these calls to create matrices of size 5)
+# A = hilbert_matrix(5)
+# A = pascal_matrix(5)
+A = magic_matrix(5)  # Uncomment this line if using a magic matrix
+
+basis = null_space_basis(A)
+print("Basis for the null space of A:")
+for vec in basis:
+  print(vec)

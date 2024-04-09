@@ -1,5 +1,6 @@
 import sympy as sp
 import numpy as np
+from scipy.linalg import orth,hilbert,pascal
 
 def exercise1():
     print("Exercise 1:")
@@ -78,16 +79,16 @@ def exercise3():
     c_matrix = np.array([1, 0, 2, 3, 4, -1, 0, 2, 0, -1, -8, -10]).reshape(3,4)
 
     def findBasicColumn(matrix):
-        rank = np.linalg.matrix_rank(matrix)
-        q, r = np.linalg.qr(matrix)
-        basic_columns = matrix[:, np.where(np.abs(r.diagonal()) > 1e-10)[0]]
+        _, r = np.linalg.qr(matrix)
+        # Select columns where absolute values of diagonal elements of r are greater than a threshold
+        basic_columns = matrix[:, np.where(np.abs(np.diag(r)) > 1e-10)[0]]
         return basic_columns
-        
+
     def findBasicRow(matrix):
         matrix_transposed = matrix.T
-        rank_transposed = np.linalg.matrix_rank(matrix_transposed)
-        q_transposed, r_transposed = np.linalg.qr(matrix_transposed)
-        basic_rows_transposed = matrix_transposed[:, np.where(np.abs(r_transposed.diagonal()) > 1e-10)[0]]
+        _, r_transposed = np.linalg.qr(matrix_transposed)
+        # Select rows where absolute values of diagonal elements of r_transposed are greater than a threshold
+        basic_rows_transposed = matrix_transposed[:, np.where(np.abs(np.diag(r_transposed)) > 1e-10)[0]]
         basic_rows = basic_rows_transposed.T
         return basic_rows
 
@@ -176,6 +177,132 @@ def exercise6():
     print(f"Vector a3 is in the column space of B: {a3_in_col_space}")
     print(f"Vector a5 is in the column space of B: {a5_in_col_space}")
 
+    
+def exercise7():
+    print()
+    print()
+    print("Exercise 7:")
+    # Define the vectors
+    v1 = np.array([1, 0, 2])
+    v2 = np.array([0, 1, 4])
+    v3 = np.array([2, -2, -4])
+
+    A = np.column_stack((v1, v2, v3))
+    reduced_A = np.linalg.matrix_rank(A)
+    dimension = reduced_A
+
+    print("Dimension of the span:", dimension)
+    basis = A[:, :reduced_A]
+    print("Basis for the span:")
+    print(basis)
+
+def exercise8():
+    print()
+    print()
+    print("Exercise 8:")
+
+    # a
+    hilbert_matrix = hilbert(5)
+    _, _, V = np.linalg.svd(hilbert_matrix)
+    null_basis_hilbert = V.T[:, -4:]
+
+    print("Basis for the null space of Hilbert matrix:")
+    print(null_basis_hilbert)
+
+    # b
+    pascal_matrix = pascal(5)
+    _, _, V = np.linalg.svd(pascal_matrix)
+    null_basis_pascal = V.T[:, -4:]
+
+    print("Basis for the null space of Pascal matrix:")
+    print(null_basis_pascal)
+
+    # c
+    def generate_magic_square(n):
+        magic_square = np.zeros((n, n), dtype=int)
+        i, j = 0, n // 2
+        num = 1
+
+        while num <= n**2:
+            magic_square[i, j] = num
+            num += 1
+            newi, newj = (i - 1) % n, (j + 1) % n
+
+            if magic_square[newi, newj]:
+                i += 1
+            else:
+                i, j = newi, newj
+
+        return magic_square
+
+    magic_matrix = generate_magic_square(5)
+    _, _, V = np.linalg.svd(magic_matrix)
+    null_basis_magic = V.T[:, -4:]
+
+    print("\nBasis for the null space of Magic matrix:")
+    print(null_basis_magic)
+
+    
+def exercise9():
+    print()
+    print()
+    print("Exercise 9:")
+    u1 = (3, 1, 1)
+    u2 = (-1, 2, 1)
+    u3 = (-1/2, 2, 7/2)
+
+    def is_orthogonal(vectors):
+        n = len(vectors)
+        for i in range(n):
+            for j in range(i + 1, n):
+                dot_product = sum(vectors[i][k] * vectors[j][k] for k in range(len(vectors[i])))
+                if dot_product != 0:
+                    return False
+        return True
+
+    vectors = [u1, u2, u3]
+
+    print("The set of vectors is orthogonal: ",is_orthogonal(vectors))
+
+def exercise10():
+    print()
+    print("Exercise 10:")
+    y = np.array([7, 6])
+    u = np.array([4, 2])
+
+    def orthogonal_projection(y, u):
+        dot_y_u = np.dot(y, u)
+        dot_u_u = np.dot(u, u)
+        projection = (dot_y_u / dot_u_u) * u
+        return projection
+
+    print("The orthogonal projection of y onto u is: ",orthogonal_projection(y,u))
+
+
+def exercise11():
+    print()
+    print()
+    print("Exercise 11:")
+    U = np.array([[1, 0],
+                [0, 1],
+                [0, 0]])
+
+    def has_orthonormal_columns(matrix):
+        product = np.dot(matrix.T, matrix)
+        identity_matrix = np.eye(matrix.shape[1])
+        return np.allclose(product, identity_matrix)
+
+    print("The matrix U has orthonormal columns: ",has_orthonormal_columns(U))
+
+def exercise12():
+    print()
+    print()
+    print("Exercise 12:")
+    A = np.array([-10, 13, 7, -11, 2, 1, -5, 3, -6, 3, 13, -3, 16, -16, -2, 5, 2, 1, -5, -7]).reshape(5, 4)
+    orthogonal_basis = orth(A)
+    print("Orthogonal basis for the column space of A:")
+    print(orthogonal_basis)
+
 
 exercise1()
 exercise2()
@@ -183,8 +310,9 @@ exercise3()
 exercise4()
 exercise5()
 exercise6()
-
-# def exercise7():
-#     print()
-#     print()
-#     print("Exercise 7:")
+exercise7()
+exercise8()
+exercise9()
+exercise10()
+exercise11()
+exercise12()
