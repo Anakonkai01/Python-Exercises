@@ -113,4 +113,9 @@ def exercise4():
     # # Perform linear regression and plot
     # coefficients = linear_regression(mileage, friction_index)
     # print("Coefficients (a, b):", coefficients)
-exercise4()
+
+def exercise5():
+    print()
+    print()
+    print("Exercise 5:")
+    
