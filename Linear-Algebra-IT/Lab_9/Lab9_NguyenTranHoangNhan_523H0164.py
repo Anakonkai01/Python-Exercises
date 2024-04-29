@@ -218,9 +218,9 @@ def exercise11():
 
 
 
-exercise6()
-exercise7()
+# exercise6()
+# exercise7()
 exercise8()
-exercise9()
-exercise10()
-exercise11()
+# exercise9()
+# exercise10()
+# exercise11()
