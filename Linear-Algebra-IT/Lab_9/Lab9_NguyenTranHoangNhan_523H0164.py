@@ -62,8 +62,10 @@ def exercise8():
 
     print("Rotation matrix Rπ:")
     print(R_pi)
+    print("==> Performs a 180-degree rotation, flipping the vector around.")
     print("\nRotation matrix Rπ/3:")
     print(R_pi_over_3)
+    print("==> Performs a 60-degree rotation counterclockwise around the origin.")
 
 def exercise9():
     print()
@@ -140,6 +142,9 @@ def exercise10():
     plt.show()
 
 def exercise11():
+    print()
+    print()
+    print("Exercise 11:")
     figure_F = np.array([[3,3,0,0,1,1,2.5,2.5,1,1,3],[4,5,5,0,0,1.8,1.8,2.8,2.8,4,4]])
     t1 = np.array([-1,0,0,0,-1,0,0,0,1]).reshape(3,3)
     t2 = np.array([1/4,0,0,0,1/4,0,0,0,1]).reshape(3,3)
@@ -218,9 +223,9 @@ def exercise11():
 
 
 
-# exercise6()
-# exercise7()
+exercise6()
+exercise7()
 exercise8()
-# exercise9()
-# exercise10()
-# exercise11()
+exercise9()
+exercise10()
+exercise11()
