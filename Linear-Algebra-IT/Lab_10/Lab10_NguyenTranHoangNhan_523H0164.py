@@ -167,6 +167,38 @@ def exercise8():
     print("Matrix sigma of B2:\n",sigma)
     print("Matrix VH of B2:\n",VH)
 
+def exercise10():
+    print()
+    print()
+    print("Exercise 10:")
+    row = 4
+    col = 3
+
+    Matrix = np.array([-1,-1,3,2,-1,5,5,6,7,-1,-1,-1]).reshape(row, col)
+
+    user_number = np.random.randint(1,4)
+
+    def recommend_item(M,user):
+        print("Recommend for user",user)
+        row_user = user - 1
+        mark = False
+        for j in range(len(M[row_user])):
+            if(M[row_user][j] == -1):
+                print("Item",j + 1,"can danh gia")
+                M[row_user][j] = np.random.randint(1, 10)
+                print("Da danh gia Item",j+1,"la",M[row_user][j])
+                mark = True
+        if(mark == False):
+            print("Khong con Item nao can danh gia")        
+        max = np.max(M[row_user])
+        index = 0
+        for i in range(len(M[row_user])):
+            if(max == M[row_user][i]):
+                index = i
+        print("Recommend Item:",index) 
+    
+    recommend_item(Matrix,user_number)
+
 exercise1()
 exercise2()
 exercise3()
@@ -175,3 +207,4 @@ exercise5()
 exercise6()
 exercise7()
 exercise8()
+exercise10()
